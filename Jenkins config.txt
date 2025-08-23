@@ -1,0 +1,30 @@
+sudo chown -R jenkins:www-data /var/www/
+sudo chmod -R 775 /var/www/
+
+sudo visudo
+jenkins ALL=(ALL) NOPASSWD: /bin/systemctl restart api.minipig.itstep.click.service
+jenkins ALL=(ALL) NOPASSWD: /bin/rm -rf /var/www/jenkins
+
+
+------------Working job Jenkins-------------------
+#!/bin/bash
+set -e
+
+# Шляхи
+TEMP_DIR=/var/www/jenkins
+DEPLOY_DIR=/var/www/api.minipig.itstep.click
+
+# 1. Видалимо стару тимчасову папку
+sudo rm -rf $TEMP_DIR
+
+# 2. Клонування репозиторію
+git clone https://github.com/PiterTimch/RestaurantWebAPI $TEMP_DIR
+
+# 3. Публікація (Release збірка)
+cd $TEMP_DIR
+dotnet publish -c Release -o $DEPLOY_DIR
+
+# 4. Перезапуск служби
+sudo systemctl restart api.minipig.itstep.click
+
+

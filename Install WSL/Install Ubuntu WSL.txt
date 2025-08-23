@@ -1,0 +1,96 @@
+Установити WSL або його оновити 
+Виконай у PowerShell від імені адміністратора:
+wsl --install
+wsl --update
+
+
+Встанови Ubuntu 22.04
+wsl --install -d Ubuntu-22.04
+username: vova
+password: 123456
+
+Перевірка
+wsl --list --verbose
+Запуск ос
+wsl -d Ubuntu-22.04
+Щоб була до default
+wsl --set-default Ubuntu-22.04
+
+wsl --shutdown Ubuntu-22.04
+
+Перевірка IP на верітуалці
+ifconfig
+sudo apt install net-tools
+ifconfig
+
+Ставимо mc
+sudo su
+sudo apt update
+sudo apt install mc -y
+
+--------Install SSH-----------------
+sudo apt-get install openssh-server
+sudo service ssh status
+ssh localhost
+sudo nano /etc/ssh/sshd_config
+PermitRootLogin yes
+sudo service ssh restart
+sudo passwd
+
+-----Kestrel------
+Запуск проекту на linux і windows
+
+--iis Express--
+--Install nginx--
+sudo apt update
+sudo apt install nginx
+
+--- Install dotnet 9.0 ---
+sudo add-apt-repository ppa:dotnet/backports
+
+sudo apt-get update && \
+  sudo apt-get install -y dotnet-sdk-9.0
+  
+sudo apt-get update && \
+  sudo apt-get install -y aspnetcore-runtime-9.0
+  
+sudo apt-get install -y dotnet-runtime-9.0
+
+---Add local domain---
+C:\Windows\System32\drivers\etc\hosts
+
+--- RUN ASP.NET Core in Ubuntu Hosting ---
+https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-9.0&tabs=linux-ubuntu
+
+dotnet SimpleWebSite.dll --urls http://0.0.0.0:5000
+
+dotnet SimpleWebSite.dll --urls http://localhost:4075
+
+--------Add Service Ubuntu-----------
+Треба стоврити сервіс де воно саме буде запускати додаток
+sudo nano /etc/systemd/system/local.spr311.com.service
+
+sudo systemctl enable local.spr311.com.service
+sudo systemctl start local.spr311.com.service
+sudo systemctl status local.spr311.com.service
+sudo systemctl stop local.spr311.com.service
+
+--------Add ngixn options------------
+/etc/nginx/sites-available/default
+
+server {
+server_name   local.spr311.com *.local.spr311.com;
+location / {
+        proxy_pass         http://localhost:4075;
+        proxy_http_version 1.1;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection keep-alive;
+        proxy_set_header   Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+    }
+}
+
+sudo systemctl restart nginx
+sudo systemctl status nginx
