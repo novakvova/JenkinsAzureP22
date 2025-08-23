@@ -56,30 +56,46 @@ sudo apt-get update && \
   
 sudo apt-get install -y dotnet-runtime-9.0
 
+
+dotnet --info
+
 ---Add local domain---
 C:\Windows\System32\drivers\etc\hosts
+
+-------run project-----------
+cd /var/www/
+mkdir testing
+cd testing
+git clone https://github.com/novakvova/JenkinsAzureP22
+
+cd JenkinsAzureP22/WebMVCJenkins/WebMVCJenkins
+
+dotnet build
+
+dotnet publish -c Release -o /var/www/local.jenkins.com
+
 
 --- RUN ASP.NET Core in Ubuntu Hosting ---
 https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-9.0&tabs=linux-ubuntu
 
-dotnet SimpleWebSite.dll --urls http://0.0.0.0:5000
+dotnet WebMVCJenkins.dll --urls http://0.0.0.0:5000
 
-dotnet SimpleWebSite.dll --urls http://localhost:4075
+dotnet WebMVCJenkins.dll --urls http://localhost:4075
 
 --------Add Service Ubuntu-----------
 Треба стоврити сервіс де воно саме буде запускати додаток
-sudo nano /etc/systemd/system/local.spr311.com.service
+sudo nano /etc/systemd/system/local.jenkins.com.service
 
-sudo systemctl enable local.spr311.com.service
-sudo systemctl start local.spr311.com.service
-sudo systemctl status local.spr311.com.service
-sudo systemctl stop local.spr311.com.service
+sudo systemctl enable local.jenkins.com.service
+sudo systemctl start local.jenkins.com.service
+sudo systemctl status local.jenkins.com.service
+sudo systemctl stop local.jenkins.com.service
 
 --------Add ngixn options------------
 /etc/nginx/sites-available/default
 
 server {
-server_name   local.spr311.com *.local.spr311.com;
+server_name   local.jenkins.com *.local.jenkins.com;
 location / {
         proxy_pass         http://localhost:4075;
         proxy_http_version 1.1;
