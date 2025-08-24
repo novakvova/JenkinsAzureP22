@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    environment {
+        REPO_URL = 'https://github.com/novakvova/JenkinsAzureP22'
+        CLONE_PATH = '/var/www/testing'
+        PUBLISH_PATH = '/var/www/local.jenkins.com'
+        SERVICE_NAME = 'local.jenkins.com.service'
+    }
+
+    stages {
+        stage('Clean old directory') {
+            steps {
+                sh "sudo rm -rf ${CLONE_PATH}"
+            }
+        }
+
+        stage('Clone repository') {
+            steps {
+                sh "git clone ${REPO_URL} ${CLONE_PATH}"
+            }
+        }
+
+        stage('Build .NET project') {
+            steps {
+                dir("${CLONE_PATH}/WebMVCJenkins/WebMVCJenkins") {
+                    sh "dotnet publish -c Release -o ${PUBLISH_PATH}"
+                }
+            }
+        }
+
+        stage('Restart service') {
+            steps {
+                sh "sudo systemctl restart ${SERVICE_NAME}"
+            }
+        }
+    }
+}
