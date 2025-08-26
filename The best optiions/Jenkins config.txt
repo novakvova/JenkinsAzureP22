@@ -2,7 +2,8 @@ sudo mkdir -p /var/www/local.jenkins.com
 sudo chown -R jenkins:jenkins /var/www/local.jenkins.com
 
 sudo visudo
-jenkins ALL=(ALL) NOPASSWD: /bin/systemctl restart local.jenkins.com.service
+jenkins ALL=(ALL) NOPASSWD: /bin/systemctl stop local.jenkins.com.service, /bin/systemctl start local.jenkins.com.service, /bin/rm -rf /var/www/local.jenkins.com/*, /bin/cp -r * /var/www/local.jenkins.com/
+
 
 
 ------------Working shell command-------------------
