@@ -1,0 +1,15 @@
+sudo mkdir -p /var/www/local.jenkins.com
+sudo chown -R jenkins:jenkins /var/www/local.jenkins.com
+
+sudo visudo
+jenkins ALL=(ALL) NOPASSWD: /bin/systemctl restart local.jenkins.com.service
+
+
+------------Working shell command-------------------
+cd WebMVCJenkins
+cd WebMVCJenkins
+ls -ltr
+dotnet build
+dotnet publish -c Release -o /var/www/local.jenkins.com
+
+

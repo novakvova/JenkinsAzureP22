@@ -17,7 +17,7 @@ wsl -d Ubuntu-22.04
 wsl --set-default Ubuntu-22.04
 --Видалити дистрибутив
 wsl --unregister Ubuntu-22.04
-
+--Зупинка ОС
 wsl --shutdown Ubuntu-22.04
 
 Перевірка IP на верітуалці
@@ -63,26 +63,6 @@ dotnet --info
 
 ---Add local domain---
 C:\Windows\System32\drivers\etc\hosts
-
--------run project-----------
-cd /var/www/
-mkdir testing
-cd testing
-git clone https://github.com/novakvova/JenkinsAzureP22
-
-cd JenkinsAzureP22/WebMVCJenkins/WebMVCJenkins
-
-dotnet build
-
-dotnet publish -c Release -o /var/www/local.jenkins.com
-
-
---- RUN ASP.NET Core in Ubuntu Hosting ---
-https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-9.0&tabs=linux-ubuntu
-
-dotnet WebMVCJenkins.dll --urls http://0.0.0.0:5000
-
-dotnet WebMVCJenkins.dll --urls http://localhost:4075
 
 --------Add Service Ubuntu-----------
 Треба стоврити сервіс де воно саме буде запускати додаток

@@ -1,3 +1,7 @@
+sudo mkdir -p /var/www/local.jenkins.com
+sudo chown -R jenkins:jenkins /var/www/local.jenkins.com
+
+
 sudo chown -R jenkins:www-data /var/www/
 sudo chmod -R 775 /var/www/
 
